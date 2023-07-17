@@ -3,7 +3,8 @@
 ## DESCRIPTION
 
 This plugin can be used for vaulting or unvaulting inline values of a yaml
-file
+file. I have forked this because there are a few issues that have not had a
+response from the maintainer, and I have a few fixes I would like to make. 
 
 ## INSTALLATION
 
@@ -41,25 +42,11 @@ You can use configuration to customize behavior of vim-ansible-vault.
 | Variable                        | Default            | Description                                            |
 | ------------------------------- | ------------------ | ------------------------------------------------------ |
 | `g:ansible_vault_no_unquote`    | 0                  | Set to 1 to avoid triming quotes from decoded values   |
-| `g:ansible_vault_password_file` | ~/.vault_password  | Password file to use                                   |
 
 ## USAGE
 
-A password file is used by the commands `:AnsibleVault` and `:AnsibleUnvault`
-to respectively encrypt and decrypt the value of a yaml `key: value`. You first
-have to set which file your are using to store your password. To do that you
-can set the variable `g:ansible_vault_password_file` in your *vimrc*, or you
-can set an environment variable `ANSIBLE_VAULT_PASSWORD_FILE`. If neither are
-set, by default *vim-ansible-vault* will try to read the `~/.vault_password`
-file.
-
-Using the variable `g:ansible_vault_password_file` enables you to change it
-from within vim, using keybinding or autogroup to switch between multiple
-password files.
-
-Password files are in plaintext, I have plans to add a support to use commands
-to retrieve a password (eg. using pass or gopass), let me know if you are
-interested.
+`:AnsibleVault` and `:AnsibleUnvault` are used to respectively encry and
+decrypt the value of a yaml `key: value`.
 
 In the yaml file, place the cursor on a `key: value` yaml pair then execute
 the command `:AnsibleVault`. The encrypted value will replace the unencrypted

@@ -1,32 +1,9 @@
 " ansible-vault.vim - ansible-vault wrapper to encrypt/decrypt yaml values
-" Maintainer:       Aurélien Rouëné <aurelien.github.arouene@rouene.fr>
-" Version:          1.0
 
 if exists('g:autoloaded_ansible_vault')
 	finish
 endif
 let g:autoloaded_ansible_vault = 1
-
-" Check if the password file can be found
-function! s:checkPasswordFile()
-	" if g:ansible_vault_password_file is already defined, it's value have
-	" precedence
-	if !exists('g:ansible_vault_password_file')
-		let g:ansible_vault_password_file = ''
-	endif
-
-	" or we use ANSIBLE_VAULT_PASSWORD_FILE
-	if g:ansible_vault_password_file == ''
-		let pwfile = expand(get(environ(), 'ANSIBLE_VAULT_PASSWORD_FILE', '~/.vault_password'))
-		let g:ansible_vault_password_file = pwfile
-	endif
-
-	if !filereadable(g:ansible_vault_password_file)
-		echomsg 'password file ' . g:ansible_vault_password_file . ' cannot be read'
-		return 0
-	endif
-	return 1
-endfunction
 
 " Check if ansible-vault can be found and executed
 function! s:checkAnsibleVault()
@@ -88,7 +65,7 @@ function! s:decrypt(value)
 endfunction
 
 function! AnsibleVault#Vault() abort
-	if !s:checkPasswordFile() || !s:checkAnsibleVault()
+	if !s:checkAnsibleVault()
 		return
 	endif
 	let [pos, line, value] = s:getValue()
@@ -109,10 +86,11 @@ function! AnsibleVault#Vault() abort
 	call append(pos, split(new_line, '\n'))
 	" remove the current line, as we appended the encrypted line
 	normal! dd
+	redraw!
 endfunction
 
 function! AnsibleVault#Unvault() abort
-	if !s:checkPasswordFile() || !s:checkAnsibleVault()
+	if !s:checkAnsibleVault()
 		return
 	endif
 	let [pos, line, value] = s:getValue()
@@ -132,6 +110,7 @@ function! AnsibleVault#Unvault() abort
 		" remove extra encrypted lines
 		silent execute value_begin.",".value_end."d"
 	endif
+	redraw!
 endfunction
 
 " Install public commands
