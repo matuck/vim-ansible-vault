@@ -12,7 +12,7 @@ response from the maintainer, and I have a few fixes I would like to make.
 
 With vundle, just insert the line below in your vimrc file:
 
-        Plugin 'arouene/vim-ansible-vault'
+        Plugin 'matuck/vim-ansible-vault'
 
 Then use the command `:PluginInstall`
 
@@ -20,7 +20,7 @@ Then use the command `:PluginInstall`
 
 With vim-plug, use that syntax in your vimrc file:
 
-        Plug 'arouene/vim-ansible-vault', { 'for': ['yaml', 'yaml.ansible'] }
+        Plug 'matuck/vim-ansible-vault', { 'for': ['yaml', 'yaml.ansible'] }
 
 And then use the command `:PlugInstall`
 
